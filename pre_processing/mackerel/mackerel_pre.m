@@ -41,10 +41,10 @@ pnt(:,3)=P(:,3)/(max(P(:,4))-min(P(:,4)));%Z
 % axis tight
 
 
-%==============================建模====================================
-B=sortrows(pnt);%将第一列按升序排列
+%=====================================================================
+B=sortrows(pnt);
 for i=84:1455
-    pnt_f(i-83,:)=B(i,:);    %取鱼中间部分的数据
+    pnt_f(i-83,:)=B(i,:);    
 end
 
 % figure
@@ -52,8 +52,8 @@ for j=1:49
     %         plot(pnt_f((j-1)*28+1:j*28,2),pnt_f((j-1)*28+1:j*28,3),'o')
     %         hold on
     %         plot(x_i(j,:),y_i(j,:),'ro')
-    cp(j,:)=mean(pnt_f((j-1)*28+1:j*28,:));%鱼体中间部位截面的中心点
-    my1(j)=max(pnt_f((j-1)*28+1:j*28,2));%鱼体中间部位截面的轮廓点
+    cp(j,:)=mean(pnt_f((j-1)*28+1:j*28,:));
+    my1(j)=max(pnt_f((j-1)*28+1:j*28,2));
     mz1(j)=max(pnt_f((j-1)*28+1:j*28,3));
     my2(j)=min(pnt_f((j-1)*28+1:j*28,2));
     mz2(j)=min(pnt_f((j-1)*28+1:j*28,3));
@@ -67,10 +67,10 @@ the_i=-pi:pi/20:19*pi/20;
 
 for j=1:49
     for i=1:28
-        the(i,j)=atan2(pnt_f((j-1)*28+i,3)-cp(j,3),pnt_f((j-1)*28+i,2)-cp(j,2));%鱼体截面轮廓点与中心点的夹角
+        the(i,j)=atan2(pnt_f((j-1)*28+i,3)-cp(j,3),pnt_f((j-1)*28+i,2)-cp(j,2));
     end
     x_i(j,1:num_ell)=cp(j,1);
-    y_i(j,:)=interp1(the(:,j),pnt_f((j-1)*28+1:j*28,2),the_i,'spline');%插值得出截面的有序的有固定数目的轮廓点
+    y_i(j,:)=interp1(the(:,j),pnt_f((j-1)*28+1:j*28,2),the_i,'spline');
     z_i(j,:)=interp1(the(:,j),pnt_f((j-1)*28+1:j*28,3),the_i,'spline');
     
     pnt_m((j-1)*num_ell+1:j*num_ell,1)= x_i(j,:);
@@ -78,11 +78,11 @@ for j=1:49
     pnt_m((j-1)*num_ell+1:j*num_ell,3)= z_i(j,:);
 end
 
-% ===================对鱼尾巴的建模==========================%
-C=B(1456:end,:);%提取尾巴的数据
-D=sortrows(C,2);%按尾巴厚度排序数据
+% =======================================================================%
+C=B(1456:end,:);
+D=sortrows(C,2);
 
-E=D(1:135,:);%提取尾巴一侧的数据，用来建模（构造无厚度的薄膜）
+E=D(1:135,:);
 
 % figure
 % for i=1:135
@@ -98,7 +98,7 @@ ix=0;iz=0;
 for i=1:135
     if E(i,3)==0
         ix=ix+1;
-        xt(ix)=E(i,1);  %提取尾巴中线的数据
+        xt(ix)=E(i,1); 
         pp_t(ix,:)=E(i,:);
     end
 end
@@ -145,7 +145,7 @@ i=0;
 for j = 1:2   % arc end intersection
     la = 0; %abs(sy(n));
     lb=mz1(j+47);
-    for m = num_tail*3/4+1:num_tail*5/4+1%  每段尾巴的点数 NZ
+    for m = num_tail*3/4+1:num_tail*5/4+1
         i = i+1;
         bx(j,m) = cp(j+47,1);
         by(j,m) = la*cos((m-1)/num_tail*2*pi);
@@ -174,7 +174,7 @@ pnt_front(1962,:)=[cp(end,1)+0.004,cp(end,2),cp(end,3)];
 %     text(pnt_tail(i,1)+0.001,pnt_tail(i,3),str)
 %     pause
 % end
-%================================建模结束====================================
+%====================================================================================
 
 % trif=tri(1:3880,:);
 % trif(3881:3920,3)=1962;
@@ -274,7 +274,7 @@ for i=2:49
     dm3(i)=rho*pi/4*((mz1(i)-mz2(i)+mz1(i-1)-mz2(i-1))/2)^2*(cp(i,1)-cp(i-1,1));% added mass
     a(i) = (mz1(i)-mz2(i)+mz1(i-1)-mz2(i-1))/2;
 end
-%=======尾巴和头部那点的质量和附加质量都是估计值=======
+%==================================================================================
 dm(1)=1/3*0.004*pi/4*(my1(1)-my2(1))*(mz1(1)-mz2(1))*rho;         %dm(2)*0.2;
 dm3(1)=pi*((mz1(1)-mz2(1))/2)^2*0.004*rho; %dm3(2)*0.2;
 a(1) = mz1(1)-mz2(1);
@@ -425,9 +425,9 @@ for nt = 1:num
     dss(nt,:) = sqrt((x1(nt,2:nl_totl+1)-x1(nt,1:nl_totl)).^2+(y1(nt,2:nl_totl+1)-y1(nt,1:nl_totl)).^2);
 end
 for nt = 1:num
-    C1(nt) = sum(c1(nt,:).*dss(nt,:));
-    C2(nt) = sum(c2(nt,:).*dss(nt,:));
-    C3(nt) = sum(c3(nt,:).*dss(nt,:));
+    C1(nt) = sum(c1(nt,:));
+    C2(nt) = sum(c2(nt,:));
+    C3(nt) = sum(c3(nt,:));
 end
 C3 = C3';
 for nt = 1:num
@@ -513,7 +513,7 @@ for nt = 1:num
     pnt_tail2(nt,1:15,2)=mean(pnt_front2(nt,47*40+2:48*40+1,2));
     pnt_tail2(nt,16:30,1)=mean(pnt_front2(nt,48*40+2:49*40+1,1));
     pnt_tail2(nt,16:30,2)=mean(pnt_front2(nt,48*40+2:49*40+1,2));
-    pnt_tail2(nt,31:end,1)=interp1(ss,x2(nt,:),pnt_tail(31:end,1),'spline');%插值得出尾巴摆动时的坐标
+    pnt_tail2(nt,31:end,1)=interp1(ss,x2(nt,:),pnt_tail(31:end,1),'spline');
     pnt_tail2(nt,31:end,2)=interp1(ss,y2(nt,:),pnt_tail(31:end,1),'spline');
 end
 
