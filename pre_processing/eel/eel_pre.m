@@ -177,9 +177,9 @@ for nt = 1:num
     dss(nt,:) = sqrt((x1(nt,2:nl_totl+1)-x1(nt,1:nl_totl)).^2+(y1(nt,2:nl_totl+1)-y1(nt,1:nl_totl)).^2);
 end
 for nt = 1:num
-    C1(nt) = sum(c1(nt,:));
-    C2(nt) = sum(c2(nt,:));
-    C3(nt) = sum(c3(nt,:));
+    C1(nt) = sum(c1(nt,:).*dss);
+    C2(nt) = sum(c2(nt,:).*dss);
+    C3(nt) = sum(c3(nt,:).*dss);
 end
 C3 = C3';
 for nt = 1:num
